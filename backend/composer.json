@@ -1,0 +1,12 @@
+{
+  "name": "collections/api",
+  "description": "api para acesso a collections",
+  "require": {
+    "php": ">= 7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "src\\": "src/"
+    }
+  }
+}

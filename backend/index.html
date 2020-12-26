@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste API</title>
+</head>
+<body>
+  <form action="http://localhost/collections/backend/api/routers/login/" method="POST">
+    Email: 
+    <input type="email" name="email" placeholder="insira seu email"><br/>
+    Senha: 
+    <input type="password" name="password" placeholder="insira seu senha"><br/>
+    <input type="submit" value="enviar">
+
+  </form>
+
+<script>
+
+  function login() {
+    fetch('http://localhost/collections/backend/api/routers/login/', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({email: 'suporte@cmtech.com.br', senha: '123456'})
+    }).then(r => r.json()).then(body => console.log(body.result.User))
+  }
+
+  login()
+
+</script>
+</body>
+</html>
