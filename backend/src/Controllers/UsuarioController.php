@@ -12,9 +12,7 @@ class UsuarioController {
 
     $user = new Usuarios();
 
-    $data = $user->verificaUsuario($email, $senha, self::$array);
-
-    // print_r(isset($data['error']));
+    $data = $user->verificaUsuario($email, $senha);
 
     if (isset($data)) {      
 
@@ -27,28 +25,14 @@ class UsuarioController {
 
       } else {
         // echo $data;
-        $data = json_decode($data);
+        // $data = json_decode($data);
         self::$array['success'] = true;
         self::$array['result']['User'] = $data;      
         return self::$array;
 
       }
 
-      
-     
-
-      // self::$array['result']['User'] = $data;
-      
-      // return self::$array;
-
     }
-    //  else {  
-
-    //   return json_encode($array['error'] = "Usuário/senha inválidos!");
-
-    // }
-    
-
-    // echo "deu certo";
   }
+
 }

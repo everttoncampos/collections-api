@@ -7,6 +7,7 @@ header("Content-Text: application/json");
 require '../../../vendor/autoload.php';
 
 use src\Controllers\UsuarioController;
+use src\Controllers\ProfessorController;
 
 
 $method = strtoupper($_SERVER['REQUEST_METHOD']);
@@ -30,16 +31,29 @@ if($method === 'POST') {
 
   if(!empty($email) && !empty($senha)) {
 
-    $u = new UsuarioController();
-    $dadosUsuario = $u->verificaUsuario($email, $senha);
+    $user = new UsuarioController();
+    $array = $user->verificaUsuario($email, $senha);
 
-    if ($dadosUsuario) {
-      echo json_encode($dadosUsuario);    
+    if ($array['success'] == '1' && $array['result']['User']['admin'] === '0') {
+
+      echo json_encode($array); 
+
+    } elseif ($array['success'] == '1' && $array['result']['User']['admin'] === '1') {
+      $prof = new ProfessorController();
+      $professores = $prof->getProfessores();
+
+      $array['result']['professores'] = $professores;
+
+      echo json_encode($array);
+      
+      // echo "Deu algum erro!";
     }
   }
 
 } else {
-  echo $array['error'] = 'Método inválido, permitido somente POST';
+  $array['success'] = false;
+  $array['error'] = 'Método inválido, permitido somente POST';
+  echo json_encode($array);
 }
 
 
