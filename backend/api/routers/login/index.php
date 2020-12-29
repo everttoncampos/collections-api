@@ -8,6 +8,7 @@ require '../../../vendor/autoload.php';
 
 use src\Controllers\UsuarioController;
 use src\Controllers\ProfessorController;
+use src\Controllers\AlunoController;
 
 
 $method = strtoupper($_SERVER['REQUEST_METHOD']);
@@ -41,8 +42,11 @@ if($method === 'POST') {
     } elseif ($array['success'] == '1' && $array['result']['User']['admin'] === '1') {
       $prof = new ProfessorController();
       $professores = $prof->getProfessores();
+      $aluno = new AlunoController();
+      $alunos = $aluno->getAlunos();
 
       $array['result']['professores'] = $professores;
+      $array['result']['alunos'] = $alunos;
 
       echo json_encode($array);
       
