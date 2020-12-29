@@ -17,15 +17,31 @@
 
 <script>
 
-  function login() {
-    fetch('http://localhost/collections/backend/api/routers/login/', {
+  let body = {
+  "turma": "turma123",
+  "descricao": "Responda com calma.",
+  "titulo": "Quanto é 3 * 2?",
+	"questoes": [
+		{
+			"pergunta1": "primeira questao",
+			"correta": "questao correta"
+		},
+		{
+			"pergunta2": "segunda questao",
+			"correta": "questao correta"
+		}
+	]
+}
+
+  async function login() {
+    await fetch('http://localhost/collections-api/backend/api/routers/cadastrar-questionario/', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({email: 'suporte@cmtech.com.br', senha: '123456'})
-    }).then(r => r.json()).then(body => console.log(body.result.User))
+    body: JSON.stringify(body)
+    }).then(r => r.json()).then(body => console.log(body.questoes.pergunta1.pergunta2))
   }
 
   login()
