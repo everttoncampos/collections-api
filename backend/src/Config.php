@@ -4,7 +4,7 @@ namespace src;
 class Config {
 
   const DB_HOST = 'localhost';
-  const DB_NAME = 'collections2';
+  const DB_NAME = 'collections';
   const DB_USER = 'root';
   const DB_PASS = '';
 
