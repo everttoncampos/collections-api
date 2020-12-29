@@ -25,7 +25,7 @@ class ProfessorController {
 
     if($idProfessor) {
 
-      $this->cadastroProfessor($nome, $senha, $telefone, $idProfessor);
+      $this->cadastroProfessor($nome, $sobrenome, $telefone, $idProfessor);
       return $idProfessor;
 
     }    
