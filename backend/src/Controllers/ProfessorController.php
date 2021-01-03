@@ -41,4 +41,8 @@ class ProfessorController {
     return self::$prof->getProfessores();
   }
 
+  public function excluirProfessor($id) {
+    return self::$prof->excluirProfessor($id);
+  }
+
 }
