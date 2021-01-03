@@ -67,5 +67,11 @@ class Professor {
       return $sql;
     }
   }
+
+  public function excluirProfessor($id) {
+
+    $sql = self::$db->query("DELETE FROM professor WHERE id = ".$id);
+    
+  }
   
 }
