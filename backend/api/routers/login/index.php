@@ -9,6 +9,7 @@ require '../../../vendor/autoload.php';
 use src\Controllers\UsuarioController;
 use src\Controllers\ProfessorController;
 use src\Controllers\AlunoController;
+use src\Controllers\QuestionarioController;
 
 
 $method = strtoupper($_SERVER['REQUEST_METHOD']);
@@ -35,23 +36,36 @@ if($method === 'POST') {
     $user = new UsuarioController();
     $array = $user->verificaUsuario($email, $senha);
 
-    if ($array['success'] == '1' && $array['result']['User']['admin'] === '0') {
+    if ($array['success'] == '1' && $array['result']['User']['admin'] === 'N') {
+
+      $idProfessor = $array['result']['User']['id'];
+
+      $questionario = new QuestionarioController();
+      $questionarios = $questionario->getQuestionariosProfessor($idProfessor);
+      
+      $aluno = new AlunoController();
+      $alunos = $aluno->getAlunosProfessor($idProfessor);
+
+      $array['result']['questionarios'] = $questionarios;
+      $array['result']['alunos'] = $alunos;
 
       echo json_encode($array); 
 
-    } elseif ($array['success'] == '1' && $array['result']['User']['admin'] === '1') {
+    } elseif ($array['success'] == '1' && $array['result']['User']['admin'] === 'S') {
+
       $prof = new ProfessorController();
       $professores = $prof->getProfessores();
       $aluno = new AlunoController();
       $alunos = $aluno->getAlunos();
+      $questionario = new QuestionarioController();
+      $questionarios = $questionario->getQuestionarios();
 
       $array['result']['professores'] = $professores;
+      $array['result']['questionarios'] = $questionarios;
       $array['result']['alunos'] = $alunos;
-
       echo json_encode($array);
-      
-      // echo "Deu algum erro!";
-    }
+
+    } 
   }
 
 } else {
