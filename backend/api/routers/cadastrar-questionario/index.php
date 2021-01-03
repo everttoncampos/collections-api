@@ -6,13 +6,23 @@ header('Content-Type: appplication/json');
 
 require '../../../vendor/autoload.php';
 
+use src\Controllers\QuestionarioController;
+
 $method = strtoupper($_SERVER['REQUEST_METHOD']);
+
 
 if ($method === 'POST') {
 
   if (!empty($_POST['questoes'])) {
 
-    
+    $titulo = filter_input(INPUT_POST, 'titulo');
+    $turma = filter_input(INPUT_POST, 'turma');
+    $descricao = filter_input(INPUT_POST, 'descricao');
+    $questoes = filter_input(INPUT_POST, 'questoes');
+
+    $questionario = new QuestionarioController();
+    $idQuestionario = $questionario->cadastrarQuestionario($turma, $titulo, $descricao);
+    $questionario->cadastrarRespostas($idQuestionario, $questoes);
 
   } else {
     
@@ -22,31 +32,13 @@ if ($method === 'POST') {
     $titulo = $dados['titulo'];
     $turma = $dados['turma'];
     $descricao = $dados['descricao'];
+    $questoes = $dados['questoes'];
 
-    $countQuestoes = count($dados['questoes']);
-
-    if (!empty($countQuestoes) && $countQuestoes > 0) {
-      for($i = 0; $i < $countQuestoes; $i++) {
-        $questoes['pergunta'.$i] = $dados['questoes'][$i];
-      }
-    }
-
-    $array['titulo'] = $titulo;
-    $array['turma'] = $turma;
-    $array['descricao'] = $descricao;
-    $array['questoes'] = $questoes;
-
-    echo json_encode($array);
-
-
-
+    $questionario = new QuestionarioController();
+    $idQuestionario = $questionario->cadastrarQuestionario($turma, $titulo, $descricao);
+    $questionario->cadastrarRespostas($idQuestionario, $questoes);
+    
   }
-
-  // if (!empty($_POST['titulo']) && !empty($_POST['turma']) && !empty($_POST['descricao'])) {
-
-  //   if 
-
-  // }
 
 
 } else {
